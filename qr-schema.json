@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Swish pre-filled qr code generator",
+  "description": "REST interface to get a QR code that the Swish app will interpret as a pre filled code",
+  "definitions": {
+    "editable": {
+      "description ": "Controls if user can modify this value in Swish app or not",
+      "type": "object",
+      "properties": {
+        "editable": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "swishString": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "maxLength": 70
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "swishNumber": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "format": {
+      "enum": [
+        "jpg",
+        "png",
+        "svg"
+      ]
+    },
+    "payee": {
+      "description": "Payment receiver",
+      "allOf": [
+        {
+          "$ref": "#/definitions/editable"
+        },
+        {
+          "$ref": "#/definitions/swishString"
+        }
+      ]
+    },
+    "amount": {
+      "description": "Payment amount",
+      "allOf": [
+        {
+          "$ref": "#/definitions/editable"
+        },
+        {
+          "$ref": "#/definitions/swishNumber"
+        }
+      ]
+    },
+    "message": {
+      "description": "Message for payment",
+      "allOf": [
+        {
+          "$ref": "#/definitions/editable"
+        },
+        {
+          "$ref": "#/definitions/swishString"
+        }
+      ]
+    },
+    "size": {
+      "description": "Size of the QR code. The code is a square, so width and height are the same. Not required is the format is svg",
+      "value": "number",
+      "minimum": 300
+    },
+    "border": {
+      "description": "Width of the border.",
+      "type": "number"
+    },
+    "transparent": {
+      "description": "Select background color to be transparent. Do not work with jpg format.",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "format"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "payee"
+      ]
+    },
+    {
+      "required": [
+        "amount"
+      ]
+    },
+    {
+      "required": [
+        "message"
+      ]
+    }
+  ],
+  "additionalProperties": false,
+  "maxProperties": 5
+}
