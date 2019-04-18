@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swish QR</title>
+</head>
+<body>
+
+<script>
+    function findGetParameter(parameterName) {
+        var result = null,
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+    function escapeHtml(html){
+        var text = document.createTextNode(html);
+        var p = document.createElement('p');
+        p.appendChild(text);
+        return p.innerHTML;
+    }
+
+    var data = '<a href="https://swishqr.wwn.se/url.php?payee=%payee%&amount=%amount%&message=%message%"><img src="https://swishqr.wwn.se/api.php?payee=%payee%&amount=%amount%&message=%message%"/></a><br>'
+    data = data.replace('%payee%',findGetParameter('payee'));
+    data = data.replace('%message%',findGetParameter('message'));
+    data = data.replace('%amount%',findGetParameter('amount'));
+    data = data.replace('%payee%',findGetParameter('payee'));
+    data = data.replace('%message%',findGetParameter('message'));
+    data = data.replace('%amount%',findGetParameter('amount'));
+    document.body.innerHTML = data;
+
+    var c = document.createElement('code');
+    c.innerHTML = escapeHtml(data);
+    document.body.appendChild(c);
+</script>
+</body>
+</html>
