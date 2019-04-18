@@ -3,9 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>Swish QR</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 </head>
 <body>
+<div id="outer" style="width:100%">
+    <div id="inner" style="display: table;margin: 0 auto;">
+        <div id="qr">
 
+        </div>
+        <p>
+            Klicka på QR koden för att öppna appen.<br>
+            Eller om du har swish appen på en annan enhet<br> skanna koden med appen
+        </p>
+    </div>
+</div>
 <script>
     function findGetParameter(parameterName) {
         var result = null,
@@ -33,11 +47,13 @@
     data = data.replace('%payee%',findGetParameter('payee'));
     data = data.replace('%message%',findGetParameter('message'));
     data = data.replace('%amount%',findGetParameter('amount'));
-    document.body.innerHTML = data;
+    var qr = document.getElementById("qr")
+    qr.innerHTML = data;
+    //document.body.innerHTML = data;
 
-    var c = document.createElement('code');
+  /*  var c = document.createElement('code');
     c.innerHTML = escapeHtml(data);
-    document.body.appendChild(c);
+    document.body.appendChild(c);*/
 </script>
 </body>
 </html>
